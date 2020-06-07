@@ -72,13 +72,13 @@ else:
 
 @post('/pred')
 def eval():
-    q = request.forms
-    phrase = q.query
+    q = request.json
+    phrase = q['query']
     print('[{}] Received {}'.format(datetime.datetime.now().time(), phrase))
-    info = json.loads(q.info)
+    info = q['info']
     info = json.dumps(info, ensure_ascii=True)
     answer = eval_run.eval(phrase, info)
-    return {'query': q.query, 'answer': answer['preds'][0]['xid']}
+    return {'query': q['query'], 'answer': answer['preds'][0]['xid']}
 
 
 def start_server(port):
